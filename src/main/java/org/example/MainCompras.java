@@ -254,7 +254,7 @@ public class MainCompras {
             System.out.println("\nCompra finalizada com sucesso!");
             System.out.println("Obrigado por comprar conosco, " + cliente.nome + "!");
 
-            // Limpar carrinho após compra
+
             carrinho.produtos.clear();
         } else {
             System.out.println("Compra cancelada.");
