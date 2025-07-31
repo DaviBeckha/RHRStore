@@ -6,7 +6,7 @@ public class Produto {
     public double preco;
     public String desc;
     public int quantidade;
-
+    Categorias categoria;
 
 
 

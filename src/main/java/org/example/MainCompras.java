@@ -21,11 +21,13 @@ public class MainCompras {
         do {
             System.out.println("\n=== MENU PRINCIPAL ===");
             System.out.println("1. Listar produtos disponíveis");
-            System.out.println("2. Buscar produto por nome");
+            System.out.println("2. Buscar produto");
             System.out.println("3. Ver carrinho");
             System.out.println("4. Finalizar compra");
-            System.out.println("0. Sair");
+            System.out.println("0. Finalizar Sistema");
             System.out.print("Escolha uma opção: ");
+            System.out.println(cliente.nome);
+
 
             opcao = sc.nextInt();
 
@@ -36,12 +38,18 @@ public class MainCompras {
                     adicionarAoCarrinho();
                     break;
                 case 2:
-                    buscarProduto();
+                    System.out.println("Buscar por 'Nome' ou 'Categoria'");
+                    String escolha = scString.nextLine();
+                    if (escolha.equalsIgnoreCase("Nome")) {
+                        buscarProduto();
+                    } else if (escolha.equalsIgnoreCase("Categoria")) {
+                        buscarProdutoCategoria();
+                    }
                     break;
                 case 3:
-                    if (carrinho.produtos.isEmpty()){
+                    if (carrinho.produtos.isEmpty()) {
                         System.out.println("\nSeu carrinho está vázio");
-                    } else{
+                    } else {
                         gerenciarCarrinho();
                     }
                     break;
@@ -49,7 +57,7 @@ public class MainCompras {
                     finalizarCompra(cliente);
                     break;
                 case 0:
-                    System.out.println("Saindoouuu");
+                    System.out.println("Saindo do Sistema...");
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -64,22 +72,41 @@ public class MainCompras {
         p1.preco = 3500.00;
         p1.desc = "Notebook Gamer Nitro 5";
         p1.quantidade = 10;
+        p1.categoria = Categorias.NOTEBOOK;
 
         Produto p2 = new Produto();
         p2.nome = "Smartphone";
         p2.preco = 1500.00;
         p2.desc = "Samsung Galaxy S23";
         p2.quantidade = 15;
+        p2.categoria = Categorias.CELULAR;
 
         Produto p3 = new Produto();
         p3.nome = "Fone de Ouvido";
         p3.preco = 250.00;
         p3.desc = "Fone Bluetooth";
         p3.quantidade = 20;
+        p3.categoria = Categorias.FONES;
+
+        Produto p4 = new Produto();
+        p4.nome = "Notebook";
+        p4.preco = 2500.00;
+        p4.desc = "Notebook Lenovo";
+        p4.quantidade = 40;
+        p4.categoria = Categorias.NOTEBOOK;
+
+        Produto p5 = new Produto();
+        p5.nome = "Iphone 13";
+        p5.preco = 3600.00;
+        p5.desc = "256GB de Armazenamento, 8 RAMs";
+        p5.quantidade = 24;
+        p5.categoria = Categorias.CELULAR;
 
         produtos.add(p1);
         produtos.add(p2);
         produtos.add(p3);
+        produtos.add(p4);
+        produtos.add(p5);
     }
 
     private static Cliente cadastrarCliente() {
@@ -87,13 +114,15 @@ public class MainCompras {
         Cliente cliente = new Cliente();
 
         System.out.print("Nome: ");
-        cliente.nome = sc.nextLine();
+        String validaNome = scString.nextLine();
+        validaString(validaNome);
+        cliente.nome = validaNome;
 
         System.out.print("Email: ");
-        cliente.email = sc.nextLine();
+        cliente.email = scString.nextLine();
 
         System.out.print("CPF: ");
-        cliente.cpf = sc.nextLine();
+        cliente.cpf = scString.nextLine();
 
         return cliente;
     }
@@ -161,20 +190,46 @@ public class MainCompras {
         }
     }
 
+    private static void buscarProdutoCategoria() {
+        System.out.println("\n**CATEGORIAS DISPONÍVEIS**\n");
+        for (Categorias c : Categorias.values()) {
+            System.out.println("--" + c);
+        }
+        System.out.print("\nDigite a categoria que deseja buscar: ");
+        String busca = scString.nextLine().toLowerCase(); // tudo letra minuscula
+
+        System.out.println("\nResultado da busca: ");
+        boolean encontrado = false;
+
+        for (Produto p : produtos) {
+            if (p.categoria.name().equalsIgnoreCase(busca)) {
+                System.out.println(p.nome + " - R$" + p.preco);
+                System.out.println("   " + p.desc);
+                System.out.println("   Quantidade disponível: " + p.quantidade);
+                System.out.println();
+                encontrado = true;
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("Nenhum produto desta encontrado com esse nome.");
+        }
+    }
+
     private static void gerenciarCarrinho() {
         System.out.println("\nSEU CARRINHO");
         carrinho.listarProdutos();
 
         System.out.println("1. Remover produto");
         System.out.println("2. Ajustar quantidade");
-        System.out.println("0. Voltar");
+        System.out.println("0. Voltar para menu principal");
         System.out.print("Escolha uma opção: ");
 
         int opcao = sc.nextInt();
         sc.nextLine();
 
         if (opcao == 1) {
-            if (carrinho.produtos.isEmpty()){
+            if (carrinho.produtos.isEmpty()) {
                 System.out.println("==SEU CARRINHO ESTÁ VAZIO==\n");
             }
             System.out.print("Digite o nome do produto a ser removido: ");
@@ -242,9 +297,6 @@ public class MainCompras {
         int formaPagamento = sc.nextInt();
 
 
-
-
-        
         Pedido pedido = new Pedido();
         pedido.cliente = cliente;
         pedido.produtos = carrinho.produtos;
@@ -268,4 +320,13 @@ public class MainCompras {
             System.out.println("Compra cancelada.");
         }
     }
+
+    private static void validaString(String texto) {
+        if (texto == null || texto.trim().isEmpty()){
+            System.out.println("Nome vazio ou nulo");
+
+        }
+    }
+
 }
+
