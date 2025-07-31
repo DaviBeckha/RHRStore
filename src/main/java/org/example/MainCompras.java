@@ -9,6 +9,7 @@ public class MainCompras {
     private static final List<Produto> produtos = new ArrayList<>();
     private static final Carrinho carrinho = new Carrinho();
     private static final Scanner sc = new Scanner(System.in);
+    private static final Scanner scString = new Scanner(System.in);
 
     public static void main(String[] args) {
 
@@ -44,7 +45,7 @@ public class MainCompras {
                     finalizarCompra(cliente);
                     break;
                 case 0:
-                    System.out.println("Saindo do sistema...");
+                    System.out.println("Saindoouuu");
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -57,13 +58,13 @@ public class MainCompras {
         Produto p1 = new Produto();
         p1.nome = "Notebook";
         p1.preco = 3500.00;
-        p1.desc = "Notebook acer nitro";
+        p1.desc = "Notebook Gamer Nitro 5";
         p1.quantidade = 10;
 
         Produto p2 = new Produto();
         p2.nome = "Smartphone";
         p2.preco = 1500.00;
-        p2.desc = "Smartphone motorola edge 40";
+        p2.desc = "Samsung Galaxy S23";
         p2.quantidade = 15;
 
         Produto p3 = new Produto();
@@ -102,6 +103,7 @@ public class MainCompras {
             System.out.println("   Quantidade disponível: " + p.quantidade);
             System.out.println();
         }
+
     }
 
     private static void adicionarAoCarrinho() {
@@ -114,17 +116,16 @@ public class MainCompras {
 
             System.out.print("Quantidade: ");
             int quantidade = sc.nextInt();
-            sc.nextLine(); // Limpar buffer
 
             if (quantidade <= produtoEscolhido.quantidade) {
                 //Aqui oque eu to fazendo é criando uma cópia para o carrinho
                 //Motivo disso é que eu pensei que seria melhor para quando ele for finalizar a compra
-                //Assim ele quando for finalizar a compra o carrinho some e fica somente o pedido.
                 Produto produtoCarrinho = new Produto();
                 produtoCarrinho.nome = produtoEscolhido.nome;
                 produtoCarrinho.preco = produtoEscolhido.preco;
                 produtoCarrinho.desc = produtoEscolhido.desc;
                 produtoCarrinho.quantidade = quantidade;
+                produtoEscolhido.quantidade -= quantidade;
 
                 carrinho.adicionarProdutos(produtoCarrinho);
                 System.out.println("Produto adicionado ao carrinho!");
@@ -136,7 +137,7 @@ public class MainCompras {
 
     private static void buscarProduto() {
         System.out.print("\nDigite o nome do produto que deseja buscar: ");
-        String busca = sc.nextLine().toLowerCase(); // tudo letra minuscula
+        String busca = scString.nextLine().toLowerCase(); // tudo letra minuscula
 
         System.out.println("\nResultado da busca: ");
         boolean encontrado = false;
@@ -153,8 +154,6 @@ public class MainCompras {
 
         if (!encontrado) {
             System.out.println("Nenhum produto encontrado com esse nome.");
-        } else {
-            adicionarAoCarrinho();
         }
     }
 
@@ -171,6 +170,9 @@ public class MainCompras {
         sc.nextLine();
 
         if (opcao == 1) {
+            if (carrinho.produtos.isEmpty()){
+                System.out.println("==SEU CARRINHO ESTÁ VAZIO==\n");
+            }
             System.out.print("Digite o nome do produto a ser removido: ");
             String nomeProduto = sc.nextLine();
 
@@ -214,7 +216,7 @@ public class MainCompras {
             return;
         }
 
-        System.out.println("\nFinalizando compra");
+        System.out.println("\nFinalizando compra\n");
 
 
         System.out.println("Itens no carrinho:");
@@ -236,6 +238,8 @@ public class MainCompras {
         int formaPagamento = sc.nextInt();
 
 
+
+
         
         Pedido pedido = new Pedido();
         pedido.cliente = cliente;
@@ -248,7 +252,7 @@ public class MainCompras {
         System.out.println("Forma de pagamento: " + pedido.formaPagamento);
         System.out.println("Total: R$" + total);
         System.out.print("\nConfirmar compra (S/N)? ");
-        String confirmacao = sc.nextLine();
+        String confirmacao = scString.nextLine();
 
         if (confirmacao.equalsIgnoreCase("S")) {
             System.out.println("\nCompra finalizada com sucesso!");

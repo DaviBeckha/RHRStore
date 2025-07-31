@@ -12,8 +12,12 @@ public class Carrinho {
     }
 
     public void removerProdutos(Produto produto) {
+
+
         produtos.remove(produto);
     }
+
+
 
     public void listarProdutos() {
         for (Produto produto : produtos) {
