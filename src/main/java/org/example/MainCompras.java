@@ -39,7 +39,11 @@ public class MainCompras {
                     buscarProduto();
                     break;
                 case 3:
-                    gerenciarCarrinho();
+                    if (carrinho.produtos.isEmpty()){
+                        System.out.println("\nSeu carrinho está vázio");
+                    } else{
+                        gerenciarCarrinho();
+                    }
                     break;
                 case 4:
                     finalizarCompra(cliente);
