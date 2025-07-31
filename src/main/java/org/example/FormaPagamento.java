@@ -11,11 +11,6 @@ public enum FormaPagamento {
         this.codigo = codigo;
     }
 
-    public int getCodigo() {
-        return codigo;
-    }
-
-
     public static FormaPagamento porCodigo(int codigo) {
         for (FormaPagamento f : FormaPagamento.values()) {
             if (f.getCodigo() == codigo) {
@@ -23,5 +18,9 @@ public enum FormaPagamento {
             }
         }
         throw new IllegalArgumentException("Código inválido: " + codigo);
+    }
+
+    public int getCodigo() {
+        return codigo;
     }
 }
