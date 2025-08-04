@@ -26,7 +26,7 @@ public class MainCompras {
             System.out.println("4. Finalizar compra");
             System.out.println("0. Finalizar Sistema");
             System.out.print("Escolha uma opção: ");
-            System.out.println(cliente.nome);
+
 
 
             opcao = sc.nextInt();
@@ -44,6 +44,8 @@ public class MainCompras {
                         buscarProduto();
                     } else if (escolha.equalsIgnoreCase("Categoria")) {
                         buscarProdutoCategoria();
+                    } else  {
+                        System.out.println("Por favor, pesquisar por 'nome' ou 'categoria'");
                     }
                     break;
                 case 3:
@@ -114,9 +116,7 @@ public class MainCompras {
         Cliente cliente = new Cliente();
 
         System.out.print("Nome: ");
-        String validaNome = scString.nextLine();
-        validaString(validaNome);
-        cliente.nome = validaNome;
+        cliente.nome = scString.nextLine();
 
         System.out.print("Email: ");
         cliente.email = scString.nextLine();
@@ -318,13 +318,6 @@ public class MainCompras {
             carrinho.produtos.clear();
         } else {
             System.out.println("Compra cancelada.");
-        }
-    }
-
-    private static void validaString(String texto) {
-        if (texto == null || texto.trim().isEmpty()){
-            System.out.println("Nome vazio ou nulo");
-
         }
     }
 
